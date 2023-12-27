@@ -1,0 +1,154 @@
+Accessing Beans registered using @Component: 
+	When a bean is registered using '@Component', generally it is loaded by the client program using a reference of
+	type: java.lang.Class.
+	
+	However, it is also possible to load that bean using its identity.
+	In this case, the ID must be configured by passing it as a parameter to the '@Component' annotation.
+	
+	When the configuration specific class (@Configuration) and the component specific class (@Component), both are
+	present in the same package, then only '@ComponentScan' is sufficient.
+	
+	If they are in different packages, then it is necessary to mention the name of the package of the component 
+	specific class while using '@ComponentScan'.
+	
+	When the package name is used in @ComponentScan, Spring will not only scan the components from that package
+	but also the components from its sub packages..
+	
+	Therefore is a standard practice of having component classes belonging to different packages and there will be a 
+	common parent package for them.
+	
+	When the other package name is explicitly mentioned, then it is necessary to mention the name of the configuration
+	class specific package explicitly in order to load the components from that package because the default 
+	configuration setting gets hampered.
+	
+	It is also possible to configure beans of predefined types.
+	
+Bean Wiring:
+	A bean may have dependency on another bean or several beans. When a client program requests for the outer bean,
+	Spring has to build the inner bean, inject it into outer bean and return that outer bean back to the client.
+	In this case, inner bean is getting wired with outer bean.
+	
+	In Spring, there are 2 ways to handle bean wiring:
+		1. Explicit
+		2. Implicit
+		
+	Explicit Wiring:
+		In this case, developer has to specify which bean is to be wired explicitly. Therefore it is called as explicit
+		wiring.
+		
+	Implicit Wiring:
+		In this case, rather than developer specifying explicitly to wire the bean, Spring can automatically figure it out.
+		This type of wiring is called as Implicit Wiring but precisely in the context of Spring, this concept is known as
+		Auto Wiring. 
+		
+		In order to implement auto-wiring, Spring provides '@Autowired' annotation. It is to be applied either at the
+		field level or setter method level of the property that needs to be auto-wired.
+		
+		When '@Autowired' is used, Spring identifies the type of that property and searches for the bean of that type
+		in the configuration unit.
+		
+		Once the bean is found, it gets wired otherwise throws exception : NoSuchBeanDefinitionException
+		
+		Spring has a provision to perform auto-wiring optionally. It is done by using 'required=false' attribute
+		for '@Autowired' annotation.
+		
+		By any chance, if multiple beans are found, that results into ambiguity and the end result is exception.
+		To avoid this, Spring provides '@Qualifier' annotation that is used to qualify the bean for wiring.
+		This annotation takes ID as a parameter of the bean.
+		
+		It can also be done using '@Primary'. It is applied at the method level of bean creation method of the configuration
+		specific class.
+		
+	--------------------------------------------------------------------------------------------------------
+	
+	Spring MVC:
+		Spring Framework provides its own separate module called as Spring MVC. 
+		It is a module given by Spring for building Web Applications.
+		
+		What is MVC?:
+			MVC stands for Model-View-Controller.
+			It is a commonly used design pattern for building web applications.
+			
+			M -> Model:
+				It is responsible for handling Business Logic of the application.
+				It is also responsible for holding application specific data. It is precisely called as Data Model. 
+				In Java EE environment, it can be implemented by using either simple Java Beans (Simple Java Classes) 
+				or Enterprise Java Beans (EJB).
+				
+			V -> View
+				It is responsible for handling Presentation Logic of the application.
+				It makes use of various presentation styles, themes, effect to render rich  UI.
+				In Java EE environment it is typically implemented by JSP.
+				
+			C -> Controller
+				It is responsible for handling the navigation and workflow of the application.
+				It is used to bridge the gap between Model and View.
+				In Java EE environment it is typically implemented by Servlet.
+				
+		Types of MVC:
+			MVC pattern is of 2 types:
+				1. MVC 1 (MVC Model 1)
+				2. MVC 2	(MVC Model 2)	
+				
+			MVC 1:
+				In this case, all the aspects of MVC i.e. Model, View and Controller are taken by JSPs.
+				Therefore MVC 1 is also called as Page Centric  Architecture.
+				This type of programming model is highly discouraged.
+			
+			MVC 2:
+				In this case, all the aspects of MVC i.e. Model, View and Controller are decoupled from each other.
+				Model is handled using Java Classes or EJBs, View is by JSPs and Controller is by Servlets.
+				Since the entire workflow is managed by servlets, MVC 2 is also called as Servlet Centric Architecture.
+				Since there is a clear code separation, this type of programming is highly encouraged. 
+				
+		Spring MVC:
+			Spring MVC is completely based upon MVC 2 Architecture.
+			Therefore web applications developed using Spring MVC adhere to standard programming practices.
+			
+			In addition to this, Spring MVC follows one more design pattern known as Front Controller.
+			
+			In the entire web application, there is a single controller which accepts all the incoming requests and
+			delegates the same as per the requirement.
+			This type  of controller is called as Front Controller.
+			
+			This Front Controller is predefined by Spring MVC. It is known as 'DispatcherServlet'
+			
+		Spring MVC components:
+			There are mainly 5 components involved in Spring MVC.
+				1. Front Controller:
+						It is a single controller responsible for accepting all incoming requests.
+						It is predefined.
+					 
+				2. Model:
+						It is a Java class responsible for handling business logic of the application.
+						It can also be used to store domain specific data.
+						It has to be provided by developer.
+						
+				3. View:
+						It is a JSP page responsible for handling the presentation logic of the application.
+						It has to be provided by developer.
+						
+				4. Controller:
+						It is a Java class responsible for handling the incoming request.
+						It acts as a gateway to the Model.
+						It handles the request and returns the name of the view that is to be rendered.
+						It has to be provided by developer.
+						
+				5. View Resolver
+						It is a Java class responsible for resolving the view.
+						It is predefined by Spring. 
+						Spring provides several view resolvers but the most frequently used is 'InternalResourceViewResolver'.
+			
+		
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

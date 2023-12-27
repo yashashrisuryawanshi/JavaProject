@@ -1,0 +1,142 @@
+Spring MVC:
+		Spring Framework provides its own separate module called as Spring MVC. 
+		It is a module given by Spring for building Web Applications.
+		
+		What is MVC?:
+			MVC stands for Model-View-Controller.
+			It is a commonly used design pattern for building web applications.
+			
+			M -> Model:
+				It is responsible for handling Business Logic of the application.
+				It is also responsible for holding application specific data. It is precisely called as Data Model. 
+				In Java EE environment, it can be implemented by using either simple Java Beans (Simple Java Classes) 
+				or Enterprise Java Beans (EJB).
+				
+			V -> View
+				It is responsible for handling Presentation Logic of the application.
+				It makes use of various presentation styles, themes, effect to render rich  UI.
+				In Java EE environment it is typically implemented by JSP.
+				
+			C -> Controller
+				It is responsible for handling the navigation and workflow of the application.
+				It is used to bridge the gap between Model and View.
+				In Java EE environment it is typically implemented by Servlet.
+				
+		Types of MVC:
+			MVC pattern is of 2 types:
+				1. MVC 1 (MVC Model 1)
+				2. MVC 2	(MVC Model 2)	
+				
+			MVC 1:
+				In this case, all the aspects of MVC i.e. Model, View and Controller are taken by JSPs.
+				Therefore MVC 1 is also called as Page Centric  Architecture.
+				This type of programming model is highly discouraged.
+			
+			MVC 2:
+				In this case, all the aspects of MVC i.e. Model, View and Controller are decoupled from each other.
+				Model is handled using Java Classes or EJBs, View is by JSPs and Controller is by Servlets.
+				Since the entire workflow is managed by servlets, MVC 2 is also called as Servlet Centric Architecture.
+				Since there is a clear code separation, this type of programming is highly encouraged. 
+				
+		Spring MVC:
+			Spring MVC is completely based upon MVC 2 Architecture.
+			Therefore web applications developed using Spring MVC adhere to standard programming practices.
+			
+			In addition to this, Spring MVC follows one more design pattern known as Front Controller.
+			
+			In the entire web application, there is a single controller which accepts all the incoming requests and
+			delegates the same as per the requirement.
+			This type  of controller is called as Front Controller.
+			
+			This Front Controller is predefined by Spring MVC. It is known as 'DispatcherServlet'
+			
+		Spring MVC components:
+			There are mainly 5 components involved in Spring MVC.
+				1. Front Controller:
+						It is a single controller responsible for accepting all incoming requests.
+						It is predefined.
+					 
+				2. Model:
+						It is a Java class responsible for handling business logic of the application.
+						It can also be used to store domain specific data.
+						It has to be provided by developer.
+						
+				3. View:
+						It is a JSP page responsible for handling the presentation logic of the application.
+						It has to be provided by developer.
+						
+				4. Controller:
+						It is a Java class responsible for handling the incoming request.
+						It acts as a gateway to the Model.
+						It handles the request and returns the name of the view that is to be rendered.
+						It has to be provided by developer.
+						
+				5. View Resolver
+						It is a Java class responsible for resolving the view.
+						It is predefined by Spring. 
+						Spring provides several view resolvers but the most frequently used is 'InternalResourceViewResolver'.
+						
+	Getting Started:
+		In order to build web application using Spring MVC, it is necessary to get Spring MVC specific libraries (JARs).
+		These can be obtained by:
+			1. Downloading them separately
+			2. Installing them using build tools like Maven, Gradle etc.
+			
+		Since Spring MVC is specifically meant for Web Development, the type of the project must be web project.
+		
+	First Spring MVC Application:
+		1. Create a Maven based Web Project
+		
+		2. Set the Java Version to 11
+		
+		3. Add Spring MVC specific dependency
+		
+		4. Set the target runtime e.g. Tomcat
+		
+		5. Configure the Front Controller i.e. DispatcherServlet in such a way that it accepts all the incoming requests.
+			This is done by using an interface provided by Spring MVC called as 'WebApplicationInitializer'
+			
+			To configure Front Controller, it is necessary to create a class which implements 'WebApplicationInitializer'
+			interface.
+			
+			This interface provides a method: 'onStartUp()' which gets called when the application starts. It accepts
+			a parameter of type 'javax.servlet.ServletContext'
+			
+			ServletContext is the application specific object. Therefore it can be used to hold any information at the
+			application level.
+			
+			It is necessary to instantiate Front Controller i.e. DispatcherServlet based upon the context of the web
+			application: WebApplicationContext 
+			
+			Register this Front Controller using 'ServletContext'
+			
+		6. Create a View (JSP) in some folder under '/WEB-INF/
+			This is requirement specific. The folder can be different.
+			
+		7, Create a Controller
+			Controllers in Spring MVC are simple Java classes.
+			Once the class is created, it needs to be configured as Controller specific class.
+			This is done by applying '@Controller' annotation at the class level.
+			
+		8. Define a request handling method which returns the view name.
+			In order to configure the method for handling request, it must be annotated using '@RequestMapping'
+			annotation. This annotation accepts the URL pattern.
+		
+		9. Configure ViewResolver
+			Since the value returned from Controller is the name of the view, it needs to be resolved.
+			It is done by using some View Resolver. The most commonly used is InternalResourceViewResolver.
+			
+			To configure InternalResourceViewResolver, Spring MVC provides an interface: WebMvcConfigurer
+			Therefore the configuration is done using an implementation class of type WebMvcConfigurer.
+			
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		

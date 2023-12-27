@@ -1,0 +1,81 @@
+Spring:
+	Spring is a Java Based Framework used to handle various aspects of the application.
+	
+	Like Java EE, Spring follows Component Driven Architecture.
+	Spring provides its own environment known as Container.
+	
+	Capabilities of Spring:
+		1. Spring provides life cycle management support for the Java classes even though they are POJOs.
+					POJO -> Plain Old Java Object
+					(Any class which is independent of any specific API) 
+			A simple Java class object can get managed by Spring.
+			
+		2. Spring can be used to acquire higher end services (Enterprise Services) just like Java EE.
+				E.g
+					Scalability
+					Persistency
+					Security
+					Asynchronous Messaging 
+					
+		3. Spring provides wide range of adapters for handling DB connectivity.
+			It can be easily integrated with several Data Persistency related technologies like JDBC, Hibernate, JPA 
+			etc.
+			
+		4. Spring has its own MVC module which can be used to build Web Based applications.
+		
+		5. Spring can be used further to handle REST end points.
+	
+	Features:
+		1. Managed Components even though they are POJOs
+		2. Dependency Injection
+				The dependencies are injected by Spring.
+		3. AOP -> Aspect Oriented Programming
+				Promotes separation of Secondary Concern from Primary Concern
+														(Secondary Logic)				(Primary Logic)
+														
+	Getting Started:
+		First Spring Example:
+			1. In order to get started with Spring, it is necessary to get the libraries of Spring (JARs)
+				This can be simplified using some build tools like Maven, Gradle etc.
+				
+				Using Maven:
+				
+				Create Maven Based project.
+				
+			2. Add Spring specific dependency: "spring context".
+			
+			3. Create an Interface with some method.
+			
+			4. Create an Implementation class of that Interface
+			
+			5. In order to acquire the Life Cycle Management support from Spring for a specific object, it is necessary
+			 	to register that object with Spring's environment.
+			 	
+			 	Any object that is declared to Spring's environment or that is registered with Spring's environment is 
+			 	called as a Spring Bean.
+			 	
+			 	There are 2 ways to handle this registration:
+			 		1. Using XML
+			 		2. Using Annotations
+			 		
+			 	Register the bean in Spring's configuration unit: XML file.
+			 	This file can have any name but by convention it is 'spring-config.xml'.
+			 	This file can be placed anywhere.
+			 
+			 6. Write Main Program:
+			 		In order to obtain the object from Spring, first it is necessary to get access to the Spring's environment.
+			 		This is possible using an interface: ApplicationContext.
+			 		
+			 		1. Build ApplicationContext
+			 		2. Obtain the object using this context against its ID. 
+			 		3. Perform the type conversion
+			 		4. Invoke the method
+			
+			
+			
+			
+			
+			
+			
+			
+			

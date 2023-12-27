@@ -1,0 +1,174 @@
+Loading the Bean Configuration:
+	In Spring, the beans which have been configured in the configuration unit (XML File) are loaded using Spring's
+	service known as 'ApplicationContext'.
+	
+	It is an interface that has several implementations.
+	
+	The most commonly used is 'FileSystemXmlApplicationContext'. 
+	It loads the beans from XML file available on the File System.
+	
+	There is another way of loading the beans.
+	It is done by using 'ClassPathXmlApplicationContext'.
+	It loads the beans from XML file available in the project's CLASSPATH.
+	
+	In Maven based project, when the XML file is located in 'src/main/resources' , it automatically gets added into
+	project's CLASSPATH.
+	
+Bean Loading:
+	In Spring, beans are loaded (instantiated) by 2 ways:
+		1. LAZY
+		2. EAGER
+	
+	LAZY:
+		The Spring's container will load or instantiate the bean only when the client program makes a request for it using
+		'getBean()' method.
+		
+	EAGER:
+		The Spring's container will load or instantiate the bean immediately once the ApplicationContext is built.
+		This is default behaviour.
+		
+	In order to use LAZY behaviour, use [lazy-init="true"] for '<bean>' tag.
+	
+Bean Scopes:
+	The bean registered in Spring's configuration unit can be in one of the several possible scopes.
+	These scopes are of 5 types:
+		1. singleton
+		2. prototype
+		3. request
+		4. session
+		5. global-session
+	
+	The scope can be provided using 'scope' attribute of '<bean>' tag.
+	If omitted, it defaults to 'singleton'.
+	
+	'singleton':
+		If the same bean is requested multiple times, Spring returns the same object.
+		
+	'prototype':
+		It contrasts to 'singleton'.
+		Spring returns a new object every time when the bean is requested. 
+		
+	'request':
+		Spring instantiates the bean for each instance of type 'javax.servlet.http.HttpServletRequest'.
+		This scope is applicable only in Spring MVC based Web Applications.
+		
+	'session':
+		Spring instantiates the bean for each instance of type 'javax.servlet.http.HttpSession'.
+		This scope is applicable only in Spring MVC based Web Applications.
+		
+	 'global-session':
+	 	Spring instantiates the bean for each instance of type Spring's Portlet.
+	 	This scope is applicable only in Spring Portlet environment.
+	 	
+Dependency Injection:
+		The beans configured in Spring's configuration unit may have some dependencies.
+		When the bean is requested by the client program, Spring has to inject its dependencies and return the instance
+		back to the client.
+		
+		This technique is known as Dependency Injection.
+		
+		There are 3 options used for handling Dependency Injection:
+			1. Setter Injection:
+				Spring injects the values for the dependencies by calling setter methods.
+			
+			2. Constructor Injection:
+				Spring injects the values for the dependencies by calling parameterized constructor.
+				
+			3. Reference Injection:
+				This is an enhanced form of either Setter or Constructor injection.
+				Spring injects the values for the dependencies which are references using either setter or constructor
+				injection. 
+				
+	TODO 7:
+		Implement CMS using Spring Based project.
+		Configure beans of type Course using Setter and Constructor injections.
+		Write a main program to test the functionality.
+		
+		Reference Injection:
+			Sometimes, beans may represent HAS - A relationship. In this case, it is necessary for Spring to build the inner
+			bean, inject it into the outer bean and return the same back to the client.
+			
+			This is done using Reference Injection.
+			
+			In case of Reference Injection, there are 2 options to inject the reference:
+				1. Using 'ref' as an attribute
+				2. Using '<ref>' as an element (tag)
+				
+	Configuring beans programmatically:
+		In Spring, it is also possible to configure beans programmatically.
+		This allows developers to get rid of XML file and handle the same using a Java Code.
+		This approach is useful in order to quick start the applications and therefore it is widely used in other
+		Spring enabled technologies like Spring MVC, Spring REST, Spring Cloud and Spring MicroServices. 
+		
+		There are 2 ways to handle the configuration programmatically:
+			1. Java Based Configuration
+			2. Pure Annotation Based Configuration
+			
+		Java Based Configuration:
+			In this option, the beans are registered using a Java Class which is referred as the Spring's Configuration
+			specific class (Spring Configuration Unit).
+			
+			Any class is considered as a Spring Configuration specific class if it is annotated with '@Configuration'
+			annotation. It is to be applied at the Class level.
+			
+			Once a configuration specific class is created, it can hold several bean declarations.
+			In order to register the bean in the configuration specific class, it is necessary to define a method which
+			returns an object which is the bean itself.
+			
+			In order to specify that the method is not an ordinary method; rather is a method meant for bean declaration,
+			that method is to be annotated with '@Bean' annotation.
+			
+			It is to be applied at the method level.
+			
+			When a bean is registered using @Bean annotated method, by default it gets an ID which is same as that of
+			the name of the method.
+			
+			Loading the beans:
+				Once beans have been registered within the configuration unit which is a Java class, they can be obtained
+				back by the client program using a class known as 'AnnotationConfigApplicationContext'.
+				
+				Once 'AnnotationConfigApplicationContext' is instantiated, it is necessary to register the configuration
+				unit (Java class) with it. 
+				
+				Even after the registration is done, the changes do not get applied until the 
+				'AnnotationConfigApplicationContext' is refreshed.
+				
+				Therefore to refresh the context, 'refresh()' method is used.
+				
+			Whatever beans are configured using '@Configuration' and '@Bean', there must be a use of 'new' keyword
+			required.  Therefore this type of configuration is called as Java Based configuration.
+			
+		Pure Annotation Based Configuration:
+			In this approach, the bean is registered within the configuration unit without using a 'new' keyword.
+			To handle this, Spring provides several stereotype (markers) annotations.
+			
+			The most commonly used is '@Component'. It is to be applied at the class level to mark the class as a 
+			managed component.
+			
+			While building AnnotationConfigApplicationContext with the configuration unit, the context needs to be
+			refreshed in order to apply the changes.
+			
+			This can be simplified by using overloaded constructor of 'AnnotationConfigApplicationContext'.
+			
+			Obtaining the bean:
+				The bean that is registered using '@Component' annotation is obtained using a 'Class' type reference.
+				However if required, it can be obtained using its identity also.
+				
+				This is possible using overloaded 'getBean()' method.
+				
+				Once the class is declared as a component using @Component, it is necessary to get the  component 
+				scanned. This is possible using an annotation '@ComponentScan'.
+				
+				It is to be applied at the class level of the configuration specific class.
+			
+				
+			
+	
+	
+		
+		
+		
+		
+		
+		
+		

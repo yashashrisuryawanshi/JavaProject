@@ -1,0 +1,111 @@
+Spring MVC Workflow:
+	When the application starts (Tomcat server starts), 'WebApplicationInitializer' implementation gets invoked
+	through 'onStartup()' method.
+	This method accepts a parameter of type 'javax.servlet.ServletContext' which is the application specific object.
+	This is further used to configure the Front Controller: 'DispatcherServlet'.
+	
+	The 'DispatcherServlet' is built on the top of 'WebApplicationContext' which refers to the environment of Web
+	Application.
+	
+	This 'WebApplicationContext' is used to configure component scanning of the '@Controller' annotated classes 
+	based upon the base package name.
+	
+	During this, all classes annotated with '@Controller' and other beans get scanned. 
+	
+	Due to this, the request handling method which is annotated with '@RequestMapping' available in the '@Controller'
+	annotated class also gets registered.
+	
+	InternalResourceViewResolver with 'prefix' and 'suffix' also gets configured.
+	
+	When client makes a request e.g. http://localhost:9090/SpringMvcProject/showIndex:
+		1. Hits Front Controller
+		2. Goes to Controller
+		3. Controller returns view name back to Front Controller
+		4. Front Controller uses View Resolver and the view name received from Controller to resolve the view
+		5. The view is rendered back to the client.
+		
+	Form Processing:
+		Accepting input from user is a very common requirement. In web application, it is done using some HTML form.
+		When the form is submitted, the data is sent towards server and needs to be processed.
+		
+		To handle the request, Spring MVC provides a controller but to process that request, ideally it should make
+		use of Model.
+		
+		Typically, in case of Form Processing, HTTP POST type of request is used.
+		
+		To accept a POST request, it is necessary to send parameters for '@RequestMapping' annotation.
+		One of the parameters indicates type of the request and it is of an enum type: RequestMethod.
+		
+		Since data is coming from client along with the HTTP Request, it needs to be captured in the controller specific
+		request handling method. This is done using a parameterized method.
+		
+		The request parameters need to be bound with the local variables used in the method signature.
+		
+		This is done using @ReqauestParam annotation.
+		It is to applied at the local variable of that method signature.
+		
+		Is @RequestParam really necessary? 
+			If the request parameter names and request handling method signature variable names are different, then
+			the binding between them must be done using @RequestParam.
+			
+			By any chance if these names  are same, this explicit binding is not required.
+			
+	Rendering Domain Specific Data:
+		In the view layer, displaying domain specific data is  a very common requirement. In order to render that data, 
+		first it must be stored into some object which is  called as a Model object.
+		
+		Once the data is stored in this Model object, it is very convenient for the view layer to fetch that data and 
+		display it.
+		
+		Spring MVC provides an interface called as 'Model' to handle this functionality.
+		In order to use this 'Model', it is necessary to define it within the request handling method.
+		It is added as a local variable in the method signature.
+		
+		Whatever attributes are bound with Model, by default get stored at REQUEST level.
+		In order to bind them at SESSION level, Spring MVC provides an annotation called as '@SessionAttributes'.
+		It is to be applied at the class level of the controller class.
+		It is used to specify the names of the attributes that are to be bound at the SESSION level.
+			
+TODO 8:
+	Enhance CMS as per the following:
+		1. Create a web application based upon Spring MVC
+		2. Create 2 input pages as per the following:
+			Page 1:
+				Accepts a user input for Course information and on SUBMIT, adds that course into
+				in-memory Collection of type Course.
+				After the course is added show the 2nd page as a result page.
+			
+			Page 2:
+				Accepts an ID of the course as a user input and display the details of that course in the relevant result
+				page.
+				The page must show appropriate message in case of the invalid ID.
+				
+	**** Use In-Memoty Collection
+		
+		Hint:
+			class CourseData {
+				static Map<String, Course> courseData;
+				static {
+					//Instantiate the map.
+				}  
+				//Further Code
+				
+		}
+				
+				
+						
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	 
