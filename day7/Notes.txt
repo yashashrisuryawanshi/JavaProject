@@ -1,0 +1,186 @@
+General guidelines about Entity Classes:
+	1. Provide an identity.
+	
+	2. Provide no-argument constructor. This is used by Hibernate especially  while loading the data because Hibernate
+		instantiates entity class using Java's Reflection.
+		
+	3. Prefer non-final entity class. 
+			If it is 'final', Hibernate won't be able to generate PROXY which will limit the option for Performance
+			Optimization.
+	
+	4. Override 'hashCode()' and 'equals()':
+			These are especially required when the same entity is loaded using different 'Session' objects. 
+			
+Instance States:
+	An instance of an entity class goes through several states which are associated with Persistence Context.	
+	Persistence Context is an object that is solely responsible for handling persistence related operations (CRUD).
+	
+	E.g.
+		In JDBC, it is Connection and in Hibernate it is Session.
+		
+		There are mainly 4 states:
+			1. TRANSIENT
+			2. PERSISTENT
+			3. DETACHED
+			4. REMOVED
+			
+		TRANSIENT:
+			When the instance is newly created and not yet associated with Persistence Context, it is said to be in
+			TRANSIENT state.
+			In this case, the entity does not have its own identity.
+		
+		PERSISTENT:
+			When the instance gets associated with the Persistence Context, it is said to be in PERSISTENT state.
+			In this case, the instance has its own identity.
+			When transaction is committed, the current data (state of an object) held inside that object gets reflected
+			into the database.
+			
+		DETACHED:
+			When the Persistence Context with which the instance is associated, gets closed, then that instance is said
+			to be in DETACHED state.
+			
+		REMOVED:
+			When the instance specific data is removed using 'delete()' method, then it is said to be in REMOVED state.
+	
+	TRANSIENT state occurs only at the time of Record Insertion.
+	When 'Session.load()' is used, the instance directly enters into PERSITENT state.
+	
+	Using 'Session.update()':
+		Sometimes it is required to perform operations on the object which is already in DETACHED state,
+		After the operations have been performed, the latest state of that object needs to be reflected into the
+		database.  In order to handle this, the object must be in PERSISTENT state.
+		
+		In order to bring the object from DETACHED state back into the PERSISTET state, 'update()' method is
+		used.
+		
+Handling Metadata Programmatically:
+	It is also possible to handle the metadata programmatically.
+	In case of Mapping Metadata, annotations are used whereas in case of Configuration Metadata, a typical Java 
+	program is used.
+	
+	Mapping Metadata using Annotations:
+		There are 2 categories of annotation available:
+			1. Hibernate Annotations
+			2. JPA Annotations
+			
+		Hibernate Annotations are provided by Hibernate itself. It is a separate Hibernate specific library.
+		JPA Annotations are provided by JPA which is Java Persistence API (Jakarta Persistence API - New Name).
+		
+		What is JPA?
+			Hibernate is a Java Based framework which follows ORM (Object to Relational Mapping) principles.
+			Like Hibernate, there are several Java Based frameworks available which follow ORM principles.
+			E.g.
+				Toplink, Eclipselink, IBatis
+			Whenever there is a need to migrate from one ORM to another, further changes will require and this leads
+			to Tight Coupling.
+			
+			To avoid this tight coupling, it is necessary to increase the level of abstraction which is possible using JPA.
+			
+			JPA is a specification which is implemented by several popular ORM frameworks like Hibernate, Toplink,
+			IBatis etc.
+			
+			Using JPA Annotations for Mapping:
+				In the context of JPA, a class of which an object is to be stored as a record into the DB table, is referred
+				as an Entity class or just an Entity. 
+				
+				This is possible by using @Entity annotation which is to be applied at the class level.
+				
+				The Entity class needs to be mapped with the DB table. This is done using @Table annotation.
+				It is also to be applied at the class level.
+				
+				At least one field is to be declared as an identity. This is done using @Id annotation.
+				It is to be applied either at the field level or getter method level of that field
+				
+				The field is to be mapped with DB column. It is done using @Column annotation.
+				It is to be applied either at the field level or getter method level of that field
+				
+				In annotation based mapping, annotations @Entity and @Id are mandatory.
+				@Table and @Column are optional.
+				
+				If @Table is omitted, it defaults to unqualified entity class name.
+				If @Column is omitted, it defaults to field name.
+				
+		Handling Configuration Metadata Programmatically:
+			In order to handle programmatic configuration Metadata, there are several methods available in the 
+			'Configuration' class.
+			
+			E.g.
+				setProperty() - > Used to add single property
+				setProperties()  -> Used to add multiple properties stored within an object of type 'java.util.Properties'
+				
+HQL:
+	HQL stands for Hibernate Query Language.
+	It business application, loading a set of records is a very common and frequent requirement. Hibernate's 'Session'
+	interface provides 'load()' method to load or retrieve the data but it can load only one object and not multiple.
+	
+	To address this, Hibernate provides its own query language known as HQL.
+	Since RDBMS understands only SQL, it is necessary to convert HQL into SQL which is managed by Hibernate
+	itself.
+	
+	Features:
+		1. Works with Classes and Properties rather than Tables and Columns
+		2. Has ability to perform JOIN operations
+		3. Provides a variety of functions.
+		4. Has ability to use expressions.
+		
+	HQL mainly makes use of Clauses and there are 2 clauses used very frequently.
+		1. FROM clause
+		2. SELECT clause 
+		
+	Using HQL:
+		In order to use HQL, Hibernate provides an interface: 'Query' which is used to perform query operations.
+		To use 'Query', it reference needs to be obtained.
+		It is done using 'createQuery()' method of 'Session' interface.
+		
+		FROM Clause:
+			This is especially used when the entire data of the entity is to be retrieved.
+			After using FROM clause, it the entire data is not being used, then it leads to memory implications.
+			To address this, HQL provides one more clause: SELECT.
+			The results fetched in the collection are of Entity class type.
+			
+		SELECT Clause:
+			It is used to retrieve specific data of the entity class.
+			The results fetched in the collection are of type 'java.lang.Object' array.
+			
+		Although SELECT clause is used to address the memory implication problem, it becomes difficult to manage
+		the data values because the results are maintained in the form of array of type 'Object'.
+		
+		HQL provides a feature to address this problem: Constructor Expression
+		
+		This allows to populate objects of any custom class instead of Object array. This adds simplicity.
+		
+	TODO 6:
+		Enhance CMS as per the following:
+			1. Handle Metadata Programmatically
+			2. Use HQL to load multiple courses
+			3. It must cover all 3 features: FROM, SELECT and Constructor Expression
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+				
+				
+				
+	
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

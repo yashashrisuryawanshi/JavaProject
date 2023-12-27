@@ -1,0 +1,137 @@
+HTML Form Processing:
+	In web applications, it is a very frequent requirement to accept the data from end user through some HTML form.
+	When the page is submitted, this data needs to be sent towards server and get it processed by some server side
+	component. 
+	
+	Then based upon the result, the server side component generates the response.
+	
+	This is known as HTML Form Processing.
+	
+	When a form is submitted, all the values entered by end user are sent towards server (servlet) via HTTP Request.
+	When the data arrives on the server side (Inside Servlet), it needs to be captured from that request.
+	This is done using 'HttpServletRequest' interface reference.
+	
+	It provides a method 'String getParameter(String)' which accepts the parameter name and returns its value.
+	
+	In order to link HTML with Servlet in case of form processing, the HTML '<form>' tag provides 'action' attribute.
+	The value of this attribute must be the URL of the servlet excluding '/'. 
+	
+	When the data is sent towards server using HTML form, unless there is any configuration done regarding the
+	HTTP request type, by default GET request is sent.
+	
+	In this case, request parameters are appended to the URL using '?'. They are separated using '&'.
+	E.g.
+		URL?name1=value1&name2=value2
+	
+	This leads to security implications especially while sending sensitive information.
+	E.g.
+		User Credentials
+		Bank Account Details
+		Credit Card Details
+		
+	Therefore it is necessary to send this information as a pay load or along with the page body rather than appending
+	it to the URL. 
+	
+	This is possible using HTTP POST request.
+	
+	How to make and handle POST request?
+		1. Use 'method' attribute of HTML '<form>' tag with value set to 'POST'
+		2. Define 'doPost()' method in the Servlet Implementation Class.
+		
+	Different between HTTP GET and POST:
+		
+							GET																Vs 										POST
+	
+		Parameters are appended to the URL													Parameters are sent with page body
+		
+		Limitation on Data Transfer: 8KB														No limitation on Data Transfer
+		
+		Limitation on URL Length: 255 chars													No limitation on URL Length
+		
+		Generally, GET request is used to access static resources like HTML.
+		In case of Form submission, File Uploads, POST request is used.
+	
+	
+	When any JAR file is added into '/WEB-INF/lib' directory of the web project, it automatically gets added into
+	project's CLASSPATH. There is no need to set the BUILD PATH explicitly.
+	
+	TODO 3:
+		Create a main menu page that shows 2 Hyperlinks:
+			1. Create New Course
+			2. View Course
+		
+		When the 1st link is clicked, it should display another HTML for new course creation.
+		This page must accept information about the course and upon SUBMIT, it must add a new record into the
+		relevant database table. Display appropriate message after insertion.
+		(Use Drop down Combo for Provider)
+		
+		When the 2nd link is clicked, it should display another HTML for accepting Course ID.
+		When SUBMIT is clicked, it must display the remaining details of that course.
+		Display appropriate message if the entered ID is invalid.
+		
+	Session Management (Session Tracking)
+	
+		What is HTTP:
+			HTTP stands for Hyper Text Transfer Protocol.
+			It is the most commonly used protocol in web applications.
+			
+			In general, protocol is of 2 types:
+				1. Stateless
+				2. Stateful
+			
+			When a protocol cannot maintain any state with the client, then it is called as Stateless Protocol.
+			When a protocol can maintain the state with the client, then it is called as Stateful Protocol.
+			
+			As far as HTTP is concerned, it is a Stateless protocol. It does not maintain any state with the client.
+			
+			Why HTTP is Stateless?
+				HTTP internally works on the top of TCP socket connections. When the response is sent for the request, 
+				the socket is closed. When new request is made, a new socket is created which has no relation with the
+				previous socket.
+				
+			This is not sufficient in case of web applications because to perform various operations, the client may have
+			to send multiple requests towards server. Throughout all these requests, the server has to maintain the state
+			with that client and similarly with other clients as well. 
+			
+			Therefore, since HTTP is stateless, some mechanism is required so that it will behave like Stateful protocol.
+			Maintaining the state with each client is known as Session Management (State Management) or Session
+			Tracking.
+			
+			There are 4 ways of handling Session Management:
+				1. URL Encoding
+				2. Hidden Form Fields
+				3. Cookies
+				4. Servlet API - HttpSession
+				
+			In case of Servlet Programming, HttpSession is widely used. 
+			'HttpSession' is the interface which provides relevant methods to handle Session Management.
+			E.g.
+				setAttribute(String, Object) - Used to store information in the session
+				Object getAttribute(String) - Used to retrieve information from the session
+				removeAttribute(String) - Used to remove information from the session
+				
+			In order to use HttpSession, it needs to be obtained using HttpServletRequest.
+			
+			HttpServletRequest provides a method: 'getSession()' which returns 'HttpSession'
+			
+			It provides other utility methods to handle various functionalities:
+				1. setMaxInactiveInterval()
+					Accepts a time limit in terms of seconds.
+					User must make a request within this time limit in order to retain the session.
+				2. invalidate()
+					Used to kill the session explicitly.
+				
+			
+		
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

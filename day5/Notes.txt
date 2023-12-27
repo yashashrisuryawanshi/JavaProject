@@ -1,0 +1,113 @@
+Implicit Objects:
+	Unlike servlets, there is no need to obtain web environment specific resources explicitly in JSP.
+	There are some objects which are implicitly available to JSP page authors.
+	These objects are called as Implicit Objects.
+	
+	E.g.
+		request 				-->		javax.servlet.http.HttpServletRequest
+		response				-->		javax.servlet.http.HttpServletResponse
+		session					-->		javax.servlet.http.HttpSession
+		out						-->		javax.servlet.jsp.JspWriter
+		exception				-->		java.lang.Throwable
+												(This object is by default not available.
+												It can be made available by using 'isErrorPage' attribute of 'page' directive with
+												its value set to 'true'. It defaults to 'false')
+												
+Standard Actions:
+	These are the actions meant for performing specific tasks.
+	All JSP standard actions follow common format: 
+		<prefix:suffix>
+	
+	In all JSP standard actions, prefix is always 'jsp' and suffix is the actual tag name.
+	
+	<jsp:useBean>:
+		Allows to instantiate a Java Bean.
+		This makes it possible to create object of Java Beans without writing scriptlets.
+		E.g.
+			To create the object of 'Restaurant' class from 'food' package, the JSP code looks as per the following:
+				<jsp:useBean id = "r1" class = "food.Restaurant"/>
+				
+				This is equivalent of:
+				<%
+					food.Restaurant r1 = new food.Restaurant();				
+				%>
+		
+		This action has 4 attributes:
+			1. 'id' : Specifies the bean identity
+			2.'class': Specifies fully qualified name of the bean class
+			3. 'type': Specifies fully qualified name of super type (Static Type) which can be either a class or interface.
+							If omitted, it defaults to 'class' attribute's value.
+			4. 'scope': Specifies scope of the bean.
+							  There are 4 possible scopes: page (default), request, session, application
+							  
+		'<jsp:useBean>' can be used to instantiate Java Bean; however it contains default values.
+		In order to further customize the values, there is another standard action available:
+			<jsp:setProperty>
+			
+		<jsp:setProperty>:
+			It is used to set the values for the properties of the Java Bean.
+			General Syntax:
+			<jsp:setProperty name="[beanId]" property="[property-details]"/>
+		
+		At any time, there might be a need to fetch data from the bean. This is done using <jsp:getProperty>
+		General Syntax:
+			<jsp:getProperty name = "[beanId]" property="[prop-name]"/>
+			
+		When '<useBean>' is used, web container tries to find the relevant object. If found, uses the same otherwise
+		creates a new one using Java's Reflection API.
+		
+		When '<setProperty' is used with '*' option, web container tries to match the names of the request parameters
+		with the names of the target bean properties.
+		
+		Once the match is found, web container tries to find setter methods in the bean class with Java's naming 
+		convention. This is done using Reflection API.
+		
+		Once the method is found, container invokes that method.
+		Whatever type conversion is required, is also done by Web Container.
+		
+		When '<getProperty' is used, web container does the same this with one change. It invokes getter methods.
+		
+		In case of '<setProperty>', there are 4 options for setting the 'property details'.
+			1. property = "*"		--> Sets all the properties
+			
+			2. property = "property-name" 	--> Sets a single property
+				E.g.	
+					property = "cuisine"
+			
+			In both the options mentioned above, the request parameter names must match with target property names.
+			By any chance if they mismatch then 3rd option is used.
+			
+			3.  property = "property-name" param = "param-name"	--> Binds the parameter name with property name
+				E.g.
+					property = "cuisine" param = "txt_cuisine"
+					
+			4. property = "property-name" value = "value"  ---> Used to set the value explicitly.
+				E.g.
+					property = "cuisine" value = "Indian"
+					
+					This value can be expression as well
+				
+				E.g.
+					<%
+						String restCuisine = "Punjabi";
+					%>	
+					property = "cuisine" value = "<%=restCuisine%>"
+					
+	------------------------------------------------------------------------------------------------
+	
+			
+			
+			
+	
+				 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

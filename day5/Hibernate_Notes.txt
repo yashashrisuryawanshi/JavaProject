@@ -1,0 +1,150 @@
+Hibernate:
+		Every business application is decomposed into several layers.
+			1. Presentation Layer
+			2. Business Layer
+			3. Persistence Layer
+			4. Data Layer
+			
+		Hibernate is an open source Java Based Framework used to handle Persistence Layer of a business application.
+		
+		Hibernate is not a specification, it is  framework.
+		
+		A framework has its own library as well as workflow.
+		It is a partial solution to address common problems.
+		
+		Problems with JDBC:
+			1. It enforces to write the boiler-plate code e.g. Loading the driver, establishing Connection and so on.
+			2. It cannot work without SQL
+			3. It does not provide any support for Performance Optimization. Developer has to write separate code
+				for that.
+			4. It results into Impedance Mismatch e.g. Granularity, Sub-types etc.
+			
+		Benefits of Hibernate:
+			1. Developer is not required to write Boiler-Plate code for Loading the Driver, establishing Connection etc.
+			2. Allows to handle CRUD operations without SQL
+			3. Provides support for Caching, Fetching using which performance can be optimized.
+			4. Resolves Impedance Mismatch problems efficiently.
+			
+		Is Hibernate really a replacement to JDBC?
+			From developer's perspective it is YES but from Architecture's perspective NO.
+			Whenever any Java Based program wants to interact with Database, there is only 1 option: JDBC
+			Since Hibernate Framework is completely based upon Java language, it will also interact with Database
+			using JDBC.
+			
+			Therefore, Hibernate is not a replacement to JDBC; rather is an abstraction (Wrapper) on the top of JDBC.
+			
+		How Hibernate Works?
+			In any business application, there are 2 paradigms: Front End and Back End
+			If the Front End is developed using Java technology, the entities of business domain are expressed in
+			the form of objects.
+			
+			Similarly, if the Back End is a Relational database, the entities of business domain are expressed in the
+			form of tables.
+			
+			Therefore Java Based Front End and Relational Database have following correspondence:
+				
+					Java																						RDBMS
+					
+					Class																					Table
+					Fields																					Columns
+					Objects																				Records
+					
+			Hibernate provides facility to map the above mentioned things using Mapping Metadata
+			E.g. 
+				Mapping between:
+					Class and Table
+					Field and Column
+			
+			Just like mapping, Hibernate provides facility to configure the Database Connection specific properties
+			using Configuration Metadata
+			E.g.
+				Driver Class Name
+				URL
+				UserID
+				Password
+			
+			There are 2 ways to handle this Metadata:
+				1. Declaratively
+				2. Programmatically
+			
+			In case of Mapping Metadata, Declarative approach is handled using XML file and it is referred as HBM
+			file which stands for Hibernate Mapping whereas Programmatic approach is handled using Annotations.
+			
+			In case of Configuration Metadata, Declarative approach is handled using XML file and it is referred as CFG
+			file which stands for Hibernate Configuration whereas Programmatic approach is handled using a simple
+			Java program.
+		
+	Getting Started:
+			In order to start working with Hibernate, it is necessary to install all the libraries of Hibernate.
+			These libraries are maintained in the form of several JAR files.
+			
+			These JAR files can be obtained using several options:
+				1. Download them from internet explicitly.
+				2. Install them using some build tool: Maven
+				3. Install them using some build tool: Gradle
+				
+	
+	First Hibernate Example:
+		
+	1. Create a Maven based project in Eclipse	
+	
+	2. Change the JRE version to 11
+			Every Maven based project contains a project specific configuration file:
+				pom.xml ---> POM ---> Project Object Model	
+				It can be used to handle further project specific  configurations
+				
+	3. Add Hibernate specific dependencies: JARs 
+	
+	4. Create an Entity class.
+	
+	5. Create HBM File
+		Hibernate uses this file to refer to the table and columns in the database.
+		It is an XML file that can have any name but by convention it is:
+			[EntityClassName].hbm.xml
+		It must be placed under: 'src/main/resources'
+	
+		In Hibernate, every entity class that is mapped with Database table, must declare at least one property as
+		an identity.
+		
+	6. Create CFG File
+		Hibernate uses this file to establish connection with database.
+		The name of this file has to be 'hibernate.cfg.xml'. However, if required it can be modified as well. 
+		It must be placed under: 'src/main/resources'
+		
+	7. Write Main Program
+		Hibernate based program has to make use of Hibernate specific API which belongs to the main package:
+			'org.hibernate'
+		
+		The core API of Hibernate consists of following:
+			1. Session:
+				An interface that belongs to 'org.hibernate' package.
+				A lightweight object mainly used to handle CRUD operations.
+			
+			2. SessionFactory:
+				An interface that belongs to 'org.hibernate' package.
+				A heavyweight object mainly used to obtain Session.
+				Ideally there should be only one per Application.
+			
+			3. Transaction:
+				An interface that belongs to 'org.hibernate' package.
+				It is used to handle transactions.
+				It maintains atomicity.
+			
+			4. Configuration:
+				A class that belongs to 'org.hibernate.cfg' package.
+				It is used to configure Hibernate based upon Metadata
+				
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

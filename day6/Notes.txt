@@ -1,0 +1,126 @@
+Demonstratin DML INSERT using Hibernate:
+	Main Program steps:
+		1. Build 'Configuration' object
+		
+		2. Obtain 'SessionFactory' using 'Configuration' object
+		
+		3. Obtain 'Session' using 'SessionFactory'
+		
+		4. Create entity class object  
+		
+		5. Obtain and Start the Transaction using "Session'
+		
+		6. Attach the Entity Object to the 'Session'
+		
+		7. Commit the 'Transaction'
+		
+		8. Close the 'Session'
+		
+		9. Close the 'SessionFactory'
+		
+	Hibernate Example Workflow:
+		When the 'Configuration' class object is created, Hibernate searches for the configuration specific metadata
+		within a file named as : hibernate.properties. If found, configuration entries are loaded from that file.
+		
+		If not found, then Hibernate must be informed about 'hibernate.cfg.xml'. This is done by using 'configure()'
+		method.
+		
+		By any chance, this XML file name is different, then overloaded 'configure()' method is to be used.
+		E.g.
+		hibernateConfig = hibernateConfig.configure("hibernate_configuration.xml");
+		
+	TODO 4:
+		Enhance CMS in such a way that it uses Hibernate to insert the Course record into the datasbase.
+		Write a main program to test this functionality.
+		
+	
+	Loading an object against Identity:
+		In Hibernate, when object of an entity class is to be loaded from database, 'Session' interface's 'load()'
+		method is used.
+		
+		It performs loading on the basis of Identity and therefore it returns a single object.
+		
+		Since data loading is not a DML operation, there is no need to obtain 'Transaction'.
+		
+		The 'load()' method of Session interface has so many overloaded versions. The most commonly used is:
+			load(Class<T>, Serializable) 
+			
+		Identities in Hibernate:
+			Hibernate implies a rule about identities.
+				1. The property of an entity class, which is configured as an identity must be of some class type rather than
+					primitive type. 
+				2. The identity specific class must implement 'java.io.Serializable'
+				
+	Updating the data:
+		Since UPDATE is a DML operation, transaction is must.
+		Unlike save() and load(), Hibernate does not provide any method to perform DML UPDATE. However, there is
+		a method named as 'update()' available; but it is not meant for DML UPDATE. Its purpose is different.
+		
+		Typically, DML UPDATE operation is done using following steps:
+			1. Load the entity object based upon which updation is required.
+			
+			2. Obtain and Start the Transaction
+			
+			3. Change the state of the entity class object using setters. 
+			
+			4. Apply the changes made to the state by committing the Transaction.
+			
+	Deleting the data:
+		To perform DML DELETE operation, Transaction is must.
+		This is made possible using 'delete()' method of 'Session' interface.
+	
+		Steps for Deletion:
+			1. Load the entity class object that is to be deleted.
+			
+			2. Obtain and Start the Transaction.
+			
+			3. Perform DML DELETE using 'delete()' method.
+			
+			4. Commit the Transaction to apply the changes.
+			
+	TODO 5:
+		Implement CRUD operations for CMS using Hibernate.
+		
+	Loading in Hibernate:
+		Data Loading in Hibernate is done by 2 ways:
+			1. Lazy Loading
+			2. Eager Loading
+			
+		Lazy Loading:
+			When 'load()' method is invoked on 'Session' object, Hibernate does not hit the database; rather it creates
+			a new object called as PROXY. 
+			
+			As long as getter method is invoked on ID field, Hibernate will refer to this proxy itself.
+			As soon as a getter method is invoked on any field other than ID, Hibernate decides to initialize the
+			proxy by hitting the database.
+			
+		EAGER Loading
+			When 'load()' method is invoked on 'Session' object, Hibernate hits the database and results into the actual
+			entity class object creation. This time the proxy is not created.
+			
+		Generally, there are 2 approaches to create Proxy:
+			1. Using Containment (HAS - A)
+			2. Using Inheritance (IS - A)
+			
+		Hibernate follows 2nd option.
+		
+		In order to use EAGER loading, use [lazy="false"] in HBM file for '<class>' tag.
+		
+		Lazy Loading is used by Hibernate for Performance Optimization.
+			
+			
+		
+		
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		
