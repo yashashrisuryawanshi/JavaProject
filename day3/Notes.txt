@@ -1,0 +1,259 @@
+Java EE:
+	Java EE stands for Java Enterprise Edition.
+	
+	It is a platform meant for developing Web Based as well as Enterprise level applications.
+	
+	What is Web Application?
+		Any application that is accessed via Web Browser is a Web Application.
+		It is of 2 types:
+			1. Intranet
+			2. Internet
+			
+	What is Enterprise Application?
+		Any application that requires Enterprise services (Higher End Services) is called as Enterprise Application.
+		These enterprise services are as per the following:
+			1. Scalability - Ability to handle huge number of users
+			2. Availability - Application has to be available all the time
+			3. Transaction Management - Handling the concurrent transactions
+			4. Security - Handling Authentication and Authorization
+			5. Persistency - Storing the data permanently
+			6. Performance - Performance Optimization
+			7. Asynchronous Messaging - Sending the messages without knowing whether the receiver is present or not
+			
+		Java EE is completely based upon Component Driven Architecture.
+		
+		What is Component?
+			A component is an application level reusable piece of code.
+			It is divided into 2 types:
+				1. Unmanaged
+				2. Managed
+				
+			Unmanaged Component:
+				When a component is instantiated explicitly using 'new' operator, that component is called as Unmanaged
+				Component.
+				
+			Managed Component:
+				When a component gets instantiated implicitly, without 'new' operator, that component is called as Managed
+				Component.
+			
+			Generally, Java SE has Unmanaged Components, whereas Java EE has Managed Components
+			
+		Components in Java EE:
+			There are 2 types of components in Java EE:
+				1. Web Component
+				2. Business Component
+			
+			Web Component:
+				It is responsible for accepting the Web Request, processing the same and generating Web Response.
+				Web Components are further divided into 2 types:
+					1. Servlet
+					2. JSP
+					
+			Business Component:
+				It is responsible for handling Business Logic of the application.
+				It is handled using EJB -> Enterprise Java Beans
+				
+		How Java EE components are managed?
+			Java EE components are managed by some runtime environment called as Container.
+			Since Java EE components are of 2 types: Web and Business, containers are also of 2 types:
+				1. Web Container
+				2. EJB Container
+				
+		How containers are made available?
+			Containers are made available by 3rd party softwares called as Web Server and Application Server
+			
+			Web Server:
+				It is a 3rd party software that provides an environment called as Web Container.
+				There are several Web Servers available out of which the most commonly used and popular is:
+					Apache Tomcat.
+			
+			Application Server:
+				It is a 3rd party software which is an extension to Web Server.
+				It provides an additional environment: EJB Container
+				There are several Application Servers available:
+					E.g.
+						1. IBM -> Websphere
+						2. Oracle -> Weblogic
+						3. Red Hat -> JBoss
+						4. Oracle -> Glassfish
+			  
+		What is Servlet?
+			Servlet is a server side web component that is used to extend the functionality of Web Server.
+			It handles processing on server side.
+			It is used to generate dynamic web contents.
+			
+		Why Servlets became popular?
+			Servlet is not only the way of handling server side processing. There are other alternatives available.
+			E.g.
+				1. ASP.NET Framework
+				2. CGI -> Common Gateway Interface
+				3. PHP
+				4. Node JS	
+				
+		Servlets are written in Java and therefore they automatically acquire all the features of Java. 
+		Therefore servlets got wide acceptance.
+				
+		Creating Servlets:
+			In order to build servlets, it is necessary to create a Java class which is referred as Servlet Implementation
+			Class.	
+		
+			This class must make use of Servlet specific API so that it will be treated as Servlet Implementation Class.
+			
+			The Servlet API mainly consists of 2 packages:
+				1. javax.servlet
+				2. javax.servlet.http
+				
+			The 1st package provides following:
+				1. Servlet -> Interface
+				2. GenericServlet -> Class
+				3. ServletRequest -> Interface
+				4. ServletResponse -> Interface
+
+			The 2nd package provides following:
+				1. HttpServlet -> Class
+				2 HttpServletRequest -> Interface
+				3. HttpServletResponse -> Interface			
+				
+		There are 3 ways to create a Servlet Implementation Class:
+			1. By implementing 'Servlet' interface
+			2. By extending 'GenericServlet' class
+			3. By extending 'HttpServlet' class
+			
+			In the 1st option, the Servlet implementation class has to implement all the methods from the interface.
+			Therefore this option is not much recommended.
+			
+			The 2nd option is used to create a servlet which can handle any type of request. 
+			
+			The 3rd option is used to create a servlet which is specifically meant for handling HTTP request.
+			
+		Java EE is a specification and not an implementation.
+		It is implemented by different types of servers like Web Server and Application Server
+		
+		Every servlet available in the Web Application has some metadata:
+			E.g.
+				1. Class Name
+				2. Name
+				3. URL
+				4. Initialization Parameters
+				5. Description
+				
+				And so on
+				
+			The URL of the servlet and the respective implementation class and all the above configurations are mapped
+			in the deployment descriptor of the web application which is 'web.xml'.
+			
+		Deployment:
+			When the application has been developed, it needs to be deployed on the server so that the server can start
+			providing support to it.
+			
+			This phase is called as Deployment.
+			
+	How Servlets are accessed?
+		Servlets are accessed by clients using URL.
+		The URL consists of following constituents:
+			1. Protocol
+			2. IP Address
+			3. Port Number
+			4. Context Root
+			5. Resource Name / URL
+		
+		E.g.
+			http://localhost:9090/WebApp/hello 
+			
+	Life Cycle of Servlet:
+		The life cycle of servlet involves 3 stages:
+			1. Instantiation and Initialization
+			2. Service
+			3. Destroy
+			
+		Instantiation and Initialization:
+			This is the 1st state of servlet's life cycle.
+			When the servlet is requested for the very first time, it gets loaded by Web Container.
+			As soon as loading is finished, it gets instantiated by the container.
+			All these things are done using Java Reflection API.
+			Once instantiation is done, Web Container invokes 'init()' method on the servlet.
+			This is the 1st life cycle method which can be used to handle initialization if any.
+			This method gets called only once through out the life time of that servlet.
+			After the initialization, Web Container invokes 'service()' method.
+			This is the 2nd life cycle method.
+			
+		Service:
+			In this stage, the request gets served using the 'service()' method.
+			This method gets called every time when the servlet is requested.
+			
+		Destroy:
+			This stage is encountered when the server is stopped or the application is undeployed.
+			During this, the Web Container decides to remove the servlet instance  from memory.
+			At that time it invokes 'destroy()' method which is the 3rd life cycle method.
+			Like 'init()', 'destroy()' method also gets called only once.
+			
+		Annotations instead of XML:
+			Since Servlet Specification version 3, 'web.xml' is no longer needed. The entire configuration metadata 
+			can be specified using annotations. 
+			
+			
+	Linking between 'service()' and 'doGet()' methods:
+		The topmost interface 'Servlet' declares 5 abstract methods:
+			1. init();
+			2. service();
+			3. destroy();
+			4. getSerletConfig();
+			5. getServletInfo();
+		
+		The direct implemented class of 'Servlet' interface, 'GenericServlet' implements all the methods except
+		'service()'. Therefore 'GenericServlet' is an abstract class. This enforces the subclass of GenericServlet
+		to override 'service()' method.
+		
+		The sub-class of 'GenericServlet', which is 'HttpServlet' has already overridden 'service()' method. Therefore,
+		its further sub-class is not required to override 'service()' method and also it is not recommended.
+		
+		The 'service()' method from 'HttpServlet' checks the type of incoming HTTP request.
+		HTTP requests are of several types:
+			E.g.
+				GET
+				POST
+				HEAD
+				PUT
+				DELETE
+				OPTIONS
+				TRACE 
+				PATCH
+		
+		Depending upon the type of the request, it gives a call to the corresponding doXXX() method.
+		E.g.
+			GET 		-----> 		doGet()
+			POST	----->		doPost()
+			
+		In order to customize the request handling logic, it is necessary to override these methods depending upon
+		the requirement.
+			
+		
+		When a servlet is requested using its URL in the browser's address bar, always HTTP GET request is made.
+		
+	Linking Servlet with HTML:
+		Since HTML is oftenly used in web applications, it might be required to invoke a servlet from HTML.
+		There are 2 ways to handle this:
+			1. Using Hyperlink [Anchor Tag <a href>]
+			2. Using Form
+			
+		When a servlet is requested using Hyperlink, always HTTP GET request is made.	
+			
+			HTML URL:
+			http://localhost:9090/WebProject2/life_cycle.html
+			
+			Servlet URL:
+			http://localhost:9090/WebProject2/lifeCycle
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			

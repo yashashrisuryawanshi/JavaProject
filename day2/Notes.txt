@@ -1,0 +1,188 @@
+Obtaining Statement:
+	Depending upon the requirement, it is necessary to obtain relevant Statement. Typically, in JDBC, SQL queries are
+	divided into 2 types:
+		1. Simple Query
+		2. Parameterized Query
+		
+	Simple Query:
+		When a query does not have any parameter, it is called as Simple Query.
+		In case of Simple Query, java.sql.Statement is used.
+		
+	Parameterized Query:
+		When a query accepts parameters, it is called as Parameterized Query.
+		In case of Parameterized Query, java.sql.PreparedStatement is used.
+		
+	Navigating through ResultSet:
+		ResultSet is the representation of the DB table on Java side. It holds the records and the columns as per the 
+		SQL query that has been fired.
+		
+		Every record has a record position and every column has a column index.
+		The record position and the column index, both start from 1.
+		
+		The index of the columns depends upon the SQL query rather than the original table design.
+		Apart from actual record positions, there are 2  additional positions available.
+			1. Before First
+			2. After Last
+		
+		By default, the cursor of the ResultSet points to Before First.
+		In order to move the cursor in the forward direction, 'ResultSet' interface provides 'next()' method.
+		It checks whether the next record is available or not and accordingly returns 'boolean' value.
+		It also shifts the cursor one step ahead.
+		
+		To read the values using 'ResultSet', it provides several getXXX() methods.
+		
+		E.g.
+			getString()
+			getInt()
+			getFloat()
+			
+		What is DriverManager?
+			It is used to register the JDBC driver and establish connection with the database.
+			It can establish the connection using the driver only when the driver has been registered. 
+			
+			How Driver gets registered with DriverManager?
+				Generally, all JDBC Driver specific implementation classes provide a 'static' block that takes care
+				of Registration. Therefore it is necessary to invoke this 'static' block which is possible using 
+				'Class.forName()'.
+				
+		Constituents of URL:
+			Typically, the URL is composed of following constituents:
+				1. Main Protocol: jdbc
+				2. Sub Protocol: 
+						It depends upon the database.
+						E.g. 
+							For MySQL: mysql
+							For Oracle: oracle
+				3. IP Address:
+					It indicates the Inet Address of the machine on which DB server is running.
+					If the same machine is acting as Server as well as Client, it is mentioned as 'localhost'.
+				4. Port No:
+					It indicates the service running on that specific machine.
+					Every DB server has been configured with some default port number.
+					E.g.
+						MySQL: 3306
+						Oracle: 1521
+				5. Schema / Service Name
+					It indicates the name of the DB schema and/or service depending upon the database itself.
+					E.g.
+						MySQL: Schema Name
+						Oracle: Service Name
+						
+		In any business application, there is a common requirement of handling several operations towards database, 
+		which is known as CRUD operations.
+			Create Retrieve Update Delete
+		
+		To implement these CRUD operations, there is a commonly used design pattern called as DAO.
+		It stands for Data Access Object.
+		It begins with a generic interface and the corresponding implementation class specifies the actual type.
+		
+	Executing Parameterized Queries:
+		When a query accepts parameters, that query is known as Parameterized Query. To execute these queries,
+		'PreparedStatement' is used.
+		
+		It is still possible to execute parameterized query using 'Statement'; but as soon as the parameter value
+		changes, a new version of query is created and it needs to be compiled.
+		
+		If this is a repetitive task, it leads to performance implications.
+		
+		Therefore to optimize the performance, the query has to be created and compiled only once  Once this is
+		done, it gets cached. This allows to fire the same query again and again without re-compilation with different
+		values. It is done using PreparedStatement.
+		
+		While executing parameterized query, the parameter value itself is unknown. These unknown values are denoted
+		by '?'.
+		
+		When there are unknown parameters (?), it is necessary to substitute values for them before executing the 
+		query. Every unknown parameter has index which starts with 1 moving from left to right.  	
+		
+		To actually substitute the value, 'PreparedStatement' provides setXXX() methods.
+		E.g.
+			setInt()
+			setString()
+			setFloat()
+	
+	TODO 1:
+		Implement DAO pattern for handling getAll() and getOne() functionalities for Course entity.
+		Write a main class to test this functionality.
+		
+	
+	Handling DML Operations:
+		While working with DML operations like INSERT, UPDATE and DELETE, since there is no record being returned
+		from database, ResultSet is not to be used.
+		
+		To make JDBC call for DML operations, 'executeUpdate()' method is used.
+		It returns 'int' which indicates the number of records modified due to that query.
+		
+ 	TODO 2:
+ 		Enhance TODO 1 to handle DML operations.
+ 		1st Priority: INSERT
+ 		
+  Making a JDBC Call:
+  	In order to make JDBC call, there are 3 methods provided by 'Statement' interface.
+  		1. executeQuery()
+  		2. executeUpdate()
+  		3. execute()
+  	
+  	Although these methods belong to 'Statement' interface, they can be invoked using other types of statements
+  	as well.
+  	
+  	This is because of multilevel inheritance implemented.
+  	E.g.
+  		Statement	-----> 	PreparedStatement -----> CallableStatement
+  		
+  	executeQuery():
+  		In case of SELECT query, this method is used to make a JDBC call.
+  		It returns ResultSet.
+  		
+  	executeUpdate():
+  		This method is used in case of DML queries.
+  		It returns 'int'.
+  		
+  	execute():
+  		When the SQL query is decided at runtime (Dynamic Query), this method is used.
+  		It is also used to handle DDL operations.
+  		
+  		E.g.
+  			stmt.execute("drop table emp"); 
+  			
+  		It returns 'boolean'. It indicates whether the outcome from that dynamic query is a ResultSet or not. 
+  		
+  	Transaction Management:
+  		Transaction is a set of operations that must execute in a single unit.
+  		In business applications, Transaction Management is a very important activity.
+  		Transactions need to be Atomic.
+  		Atomic: Execute ALL or NONE
+  		
+  		In order to handle the atomicity, JDBC provides relevant support.
+  		
+  		By default all the DML operations performed from Java side are auto-committed. 
+  		This leads to data inconsistency if any of the operations involved in that transaction fails.
+  		To address this problem, it is necessary to disable the Auto-Commit option.
+  		
+  		This is done using the relevant methods of 'Connection' interface.
+  		
+  		E.g.
+  			setAutoCommit(boolean)
+  			commit()
+  			rollback()
+  		
+  		Method 'setAutoCommit(false)' is used to disable Auto-Commit.
+  		Methods 'commit()' and 'rollback()' are used to perform either commit or rollback respectively. 
+  	
+  	
+					
+			
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

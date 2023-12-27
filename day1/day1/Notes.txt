@@ -1,0 +1,126 @@
+JDBC:
+	JDBC stands for Java to Database Connectivity.
+	Every business application has 2 paradigms: Front End and Back End
+	
+	The front end (Not Web Based) is developed using several technologies like Java, DOT NET etc.
+	The back end is taken by several relational databases like Oracle, MySQL, MS SQL Server etc.
+	
+	In case of Java application, to bridge the gap between the application and the database, there is some
+	API provided by Java, known as JDBC.
+	
+	How JDBC Works?
+		Java provides JDBC API to interact with database similarly every DB Vendor provides its own API which
+		simplifies access for all the applications which want to interact with database. That API is called as 
+		Vendor Specific API.
+		
+		Since both APIs: JDBC and Vendor Specific APIs are written as per their own  proprietary standards. 
+		there will be conflicts. 
+		
+		These conflicts are resolved using some mediator known as Driver.
+		
+		What is Driver?
+			It is a program that converts JDBC API calls into some format which is compatible with the DB Vendor
+			specific API.
+			
+		Typically, in JDBC, there are 4 types of drivers:
+			1. Type 1
+			2. Type 2
+			3. Type 3
+			4. Type 4
+		
+		Type 1 Driver:
+			It is called as JDBC - ODBC bridge.
+			It makes use of 3rd party library called as ODBC: Open Database Connectivity given by MicroSoft.
+			It converts JDBC API call into some format which is compatible with ODBC.
+			Then ODBC makes use of its own driver which converts the call into Vendor Specific API format.
+			
+			Limitations:
+				1. It is the slowest.
+				2. It is platform dependent which is specific to Windows
+				3. Every client machine needs ODBC configuration setup
+				
+			Therefore this driver is not much recommended in PRODUCTION environment.
+			It is good enough for testing purpose or for small and simple applications.
+		
+		Type 2 Driver:
+			It is called as Native API, Partly Java Driver.
+			It uses a combination of DB Vendor and Java specific implementation.
+			It does not use any 3rd party library.
+			It directly converts JDBC calls into Vendor Specific format.
+			
+			Benefits over Type 1:
+				1. It is faster
+				2. It is platform independent
+				
+			Limitation:
+				Every client machine must have DB specific native API installed.
+		
+		Type 3 Driver:
+			it is called as Net Protocol, Intermediate DB Access Server
+			It is used when application needs to access multiple databases.
+			It makes use of some middle-ware which acts as a router.
+		
+		Type 4 Driver:
+			It is called as Vendor Specific, Pure Java Driver
+			Every DB Vendor provides its own driver which is written in Java.
+			It makes use of TCP socket connection to interact with database.
+			This socket consists of mainly 2 properties: IP - Address and Port No.
+			
+		Benefits:
+			1. It is the fastest.
+			2. It is platform independent.
+			3. It does not need any configuration setup on Client Machine.
+			
+		Therefore this driver is highly recommended in PRODUCTION environment.
+		
+	Steps for writing JDBC program:
+		1. Load the driver
+		2. Establish Connection
+		3. Generate Statement
+		4. Execute SQL Query
+		5. In case of SELECT query, obtain ResultSet and perform navigation
+		
+	Since JDBC drivers are written using Java classes, according to step 1: "Load the Driver", it actually means:
+	 "Load the Driver implementation class". 
+	 
+	 Since Type 4 driver specific classes are provided by DB vendors, by default, they are not available with the
+	 installation of JDK.
+	 
+	 They are  actually bundled into some JAR file and the relevant JAR file is required in project's CLASSPATH
+	 so that the loading will be successful.
+	 
+	 Establishing Connection:
+	 	In order to establish connection with Database, 3 properties are required:
+	 		1. Connection URL
+	 		2. User ID
+	 		3. Password
+	 		
+	 To handle the remaining steps, it is necessary to use JDBC API which belongs to java.sql package.
+	 It provides mainly following libraries:
+	 	1. DriverManager
+	 	2. Driver
+	 	3. Connection
+	 	4. Statement
+	 	5. PreparedStatement
+	 	6. CallableStatement
+	 	7. ResultSet
+	 	
+	 DriverManager:
+	 	It is used to register the JDBC driver and establish connection with the database.
+	 	
+	 Connection:
+	 	It maintains a connection with database.
+	 	
+	 		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
